@@ -1,0 +1,41 @@
+<div mat-dialog-title class="dialog-title-center">
+    <h1>Equipamientos e Instalaciones</h1>
+</div>
+<mat-dialog-content class="padding-dialog-content">
+    <mat-card>
+        <form [formGroup]="equipmentFacilitiesForm" novalidate>
+            <mat-form-field class="auth-input" appearance="outline" floatLabel="always">
+                <mat-label>Nombre</mat-label>
+                <input class="form-control" matInput formControlName="name"
+                maxlength="20">
+                <mat-error *ngIf="equipmentFacilitiesForm.controls['name'].hasError('minlength')">
+                    Campo debe tener <strong>mínimo 5 caracteres</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="auth-input" appearance="outline" floatLabel="always">
+                <mat-label>Piso</mat-label>
+                <mat-select formControlName="id_floor" required placeholder="Seleccione un piso">
+                    <mat-option *ngFor="let floor of floors" [value]="floor.id">
+                      {{floor.floor}}
+                    </mat-option>
+                  </mat-select>
+                <!-- <mat-error *ngIf="equipmentFacilitiesForm.controls['name'].hasError('minlength')">
+                    Campo debe tener <strong>mínimo 5 caracteres</strong>
+                </mat-error> -->
+            </mat-form-field>
+            <mat-form-field class="auth-input" appearance="outline" floatLabel="always">
+                <mat-label>Descripción</mat-label>
+                <input class="form-control" matInput formControlName="description"
+                maxlength="20">
+                <mat-error *ngIf="equipmentFacilitiesForm.controls['description'].hasError('minlength')">
+                    Campo debe tener <strong>mínimo 5 caracteres</strong>
+                </mat-error>
+            </mat-form-field>
+        </form>
+    </mat-card>
+</mat-dialog-content>
+<mat-dialog-actions class="buttons-center">
+    <button mat-raised-button mat-dialog-close color="warn">Cancelar</button>
+    <button mat-raised-button color="primary"
+    (click)="saveEquipmentFacilities(equipmentFacilitiesForm.value)">Guardar</button>
+</mat-dialog-actions>

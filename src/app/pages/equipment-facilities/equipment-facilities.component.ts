@@ -6,6 +6,7 @@ import { EquipmentFacilitiesModel } from 'src/app/core/models/equipment-faciliti
 import { ApiService } from 'src/app/core/services/api.service';
 import { globalAlert } from 'src/app/shared/global-alert/global-alert';
 import { globalLoading } from 'src/app/shared/global-loading/global-loading.component';
+import { EquipmentFacilitiesModalComponent } from '../equipment-facilities-modal/equipment-facilities-modal.component';
 
 @Component({
   selector: 'app-equipment-facilities',
@@ -30,6 +31,31 @@ export class EquipmentFacilitiesComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
+  openAddEquipmentFacilities(){
+    let dialogRef = this.dialog.open(EquipmentFacilitiesModalComponent,{
+      backdropClass: 'bdc',
+      panelClass: 'modal-bg'
+    });
+    dialogRef.afterClosed().subscribe((response) => {
+      if(response === 'success'){
+        this.getAllEquipmentFacilities();
+      } 
+    });
+  }
+
+  openEditEquipmentFacilities(data: any){
+    let dialogRef = this.dialog.open(EquipmentFacilitiesModalComponent,{
+      data: data,
+      backdropClass: 'bdc',
+      panelClass: 'modal-bg'
+    });
+    dialogRef.afterClosed().subscribe((response) => {
+      if(response === 'success'){
+        this.getAllEquipmentFacilities();
+      } 
+    })
+  }
+
   getAllEquipmentFacilities(){
     let dialogRef = globalLoading(this.dialog);
     this.apiService.call(null, 'getAllEquipmentFacilities', 'GET', true).subscribe({
@@ -38,9 +64,11 @@ export class EquipmentFacilitiesComponent implements OnInit {
           this.equipmentFacilities = [];
           response.data.map((equipmentFacility: any) => {
             this.equipmentFacilities.push({
+              id: equipmentFacility.id,
               name: equipmentFacility.name,
               floor: equipmentFacility.floor.floor,
-              description: equipmentFacility.description
+              id_floor: equipmentFacility.floor.id,
+              description: equipmentFacility.description,
             })
           });
           this.dataSource.data = this.equipmentFacilities;
@@ -70,7 +98,60 @@ export class EquipmentFacilitiesComponent implements OnInit {
           });
         }
       }
-    })
+    });
   }
 
+  deleteEquipmentFacilities(values: any){
+    globalAlert({
+      title: 'Importante',
+      text: '¿Esta seguro de que desea eliminar el Equipamiento e Instalación?',
+      icon: 'warning',
+      cancelButton: true,
+      cancelButtonText: 'Cancelar',
+    }).then((resp) => {
+      if(resp.isConfirmed){
+        let dialogRef = globalLoading(this.dialog);
+        let data: any = {
+          id: values.id
+        }
+        this.apiService.call(data, 'deleteEquipmentFacilities', 'POST', true).subscribe({
+          next: (response) => {
+            if(response.status === 'SUCCESS'){
+              dialogRef.close();
+              globalAlert({
+                title: 'Transacción Exitosa',
+                text: 'Se ha eliminado exitosamente',
+                icon: 'success',
+              }).then(() => {
+                this.getAllEquipmentFacilities();
+              })
+            } else {
+              dialogRef.close();
+              globalAlert({
+                title: 'Error',
+                text: 'Disculpe, ha ocurrido un error con el servicio',
+                icon: 'error',
+              })
+            }
+          },
+          error: (error) => {
+            dialogRef.close();
+            if(error.error.msg === 'Full authentication is required'){
+              globalAlert({
+                title: 'Error',
+                text: 'Disculpe, su sesión ha expirado.',
+                icon: 'error',
+              }).then(() => this.apiService.logout());
+            } else {
+              globalAlert({
+                title: 'Error',
+                text: 'Disculpe, la plataforma no se encuentra disponible',
+                icon: 'error',
+              });
+            }
+          }
+        });
+      }
+    });
+  }
 }
