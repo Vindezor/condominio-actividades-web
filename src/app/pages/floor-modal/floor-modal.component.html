@@ -1,0 +1,22 @@
+<div mat-dialog-title class="dialog-title-center">
+    <h1>Pisos</h1>
+</div>
+<mat-dialog-content class="padding-dialog-content dialog-content-250">
+    <mat-card>
+        <form [formGroup]="floorForm" novalidate>
+            <mat-form-field class="auth-input" appearance="outline" floatLabel="always">
+                <mat-label>Nombre del piso</mat-label>
+                <input class="form-control" matInput formControlName="floor"
+                maxlength="20">
+                <mat-error *ngIf="floorForm.controls['floor'].hasError('minlength')">
+                    Campo debe tener <strong>mínimo 5 caracteres</strong>
+                </mat-error>
+            </mat-form-field>
+        </form>
+    </mat-card>
+</mat-dialog-content>
+<mat-dialog-actions class="buttons-center">
+    <button mat-raised-button mat-dialog-close color="warn">Cancelar</button>
+    <button mat-raised-button color="primary"
+    (click)="saveFloor(floorForm.value)">Guardar</button>
+</mat-dialog-actions>

@@ -14,12 +14,20 @@ import { MatIconModule } from '@angular/material/icon';
 import { EquipmentFacilitiesModalComponent } from './equipment-facilities-modal/equipment-facilities-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
+import { FloorModalComponent } from './floor-modal/floor-modal.component';
+import { FloorComponent } from './floor/floor.component';
+import { CompanyComponent } from './company/company.component';
+import { CompanyModalComponent } from './company-modal/company-modal.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
     EquipmentFacilitiesComponent,
-    EquipmentFacilitiesModalComponent
+    EquipmentFacilitiesModalComponent,
+    FloorModalComponent,
+    FloorComponent,
+    CompanyComponent,
+    CompanyModalComponent
   ],
   imports: [
     CommonModule,

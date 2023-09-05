@@ -212,12 +212,16 @@ mat-toolbar{
   padding-bottom: 2px !important;
 }
 
+.dialog-content-250{
+  width: 250px;
+}
+
 .buttons-center{
   display: flex;
   justify-content: center;
 
   button{
-    width: 30%;
+    width: 40%;
   }
 }
 
@@ -228,7 +232,8 @@ mat-toolbar{
 .action-table-two{
   width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 10px;
 }
 
 .icon-action{
@@ -237,4 +242,43 @@ mat-toolbar{
 
 .icon-action:hover{
   color: rgb(39, 73, 139, 0.8);
+}
+
+.input-with-action{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 80% 20%;
+}
+
+.action-input{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.button-sidenav{
+  font-weight: bold;
+  color: rgb(39, 73, 139, 1);
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding: 0px 26px;
+}
+
+.button-sidenav:hover{
+  background-color: #f5f5f5;
+}
+
+.mat-expansion-panel-body{
+  padding: 0px !important;
+}
+
+.sidenav-title{
+  display: flex;
+  align-items: center;
+  color: rgb(39, 73, 139, 1);
+  font-weight: bold;
+  gap: 10px;
 }

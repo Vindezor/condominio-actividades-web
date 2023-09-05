@@ -12,17 +12,29 @@
                     Campo debe tener <strong>mínimo 5 caracteres</strong>
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="auth-input" appearance="outline" floatLabel="always">
-                <mat-label>Piso</mat-label>
-                <mat-select formControlName="id_floor" required placeholder="Seleccione un piso">
-                    <mat-option *ngFor="let floor of floors" [value]="floor.id">
-                      {{floor.floor}}
-                    </mat-option>
-                  </mat-select>
-                <!-- <mat-error *ngIf="equipmentFacilitiesForm.controls['name'].hasError('minlength')">
-                    Campo debe tener <strong>mínimo 5 caracteres</strong>
-                </mat-error> -->
-            </mat-form-field>
+            <div class="input-with-action">
+                <mat-form-field class="auth-input" appearance="outline" floatLabel="always">
+                    <mat-label>Piso</mat-label>
+                    <mat-select formControlName="id_floor" required placeholder="Seleccione un piso">
+                        <mat-option *ngFor="let floor of floors" [value]="floor.id">
+                          {{floor.floor}}
+                        </mat-option>
+                      </mat-select>
+                    <!-- <mat-error *ngIf="equipmentFacilitiesForm.controls['name'].hasError('minlength')">
+                        Campo debe tener <strong>mínimo 5 caracteres</strong>
+                    </mat-error> -->
+                    <!-- <div matSuffix>
+                        <button mat-raised-button color="primary">
+                            <mat-icon style="color: white;"> add </mat-icon>
+                        </button>
+                    </div> -->
+                </mat-form-field>
+                <div class="action-input">
+                    <button (click)="openAddFloor()" style="margin-left: 10px;" mat-mini-fab color="primary">
+                        <mat-icon style="color: white;"> add </mat-icon>
+                    </button>
+                </div>
+            </div>
             <mat-form-field class="auth-input" appearance="outline" floatLabel="always">
                 <mat-label>Descripción</mat-label>
                 <input class="form-control" matInput formControlName="description"

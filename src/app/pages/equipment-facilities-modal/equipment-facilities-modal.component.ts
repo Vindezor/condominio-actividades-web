@@ -5,6 +5,7 @@ import { FloorModel } from 'src/app/core/models/floor-model';
 import { ApiService } from 'src/app/core/services/api.service';
 import { globalAlert } from 'src/app/shared/global-alert/global-alert';
 import { globalLoading } from 'src/app/shared/global-loading/global-loading.component';
+import { FloorModalComponent } from '../floor-modal/floor-modal.component';
 
 @Component({
   selector: 'app-equipment-facilities-modal',
@@ -136,5 +137,17 @@ export class EquipmentFacilitiesModalComponent implements OnInit {
         }
       }
     })
+  }
+
+  openAddFloor(){
+    let dialogRef = this.dialog.open(FloorModalComponent,{
+      backdropClass: 'bdc',
+      panelClass: 'modal-bg'
+    });
+    dialogRef.afterClosed().subscribe((response) => {
+      if(response === 'success'){
+        this.getAllFloor();
+      } 
+    });
   }
 }

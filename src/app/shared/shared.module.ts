@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatButtonModule,
     MatSidenavModule,
     MatExpansionModule,
+    MatDividerModule,
   ]
 })
 export class SharedModule { }
