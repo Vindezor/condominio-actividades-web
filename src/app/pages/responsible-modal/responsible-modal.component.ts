@@ -1,33 +1,32 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { FloorModel } from 'src/app/core/models/floor-model';
+import { CompanyModel } from 'src/app/core/models/company-model';
 import { ApiService } from 'src/app/core/services/api.service';
 import { globalAlert } from 'src/app/shared/global-alert/global-alert';
 import { globalLoading } from 'src/app/shared/global-loading/global-loading.component';
-import { FloorModalComponent } from '../floor-modal/floor-modal.component';
+import { CompanyModalComponent } from '../company-modal/company-modal.component';
 
 @Component({
-  selector: 'app-equipment-facilities-modal',
-  templateUrl: './equipment-facilities-modal.component.html',
-  styleUrls: ['./equipment-facilities-modal.component.scss']
+  selector: 'app-responsible-modal',
+  templateUrl: './responsible-modal.component.html',
+  styleUrls: ['./responsible-modal.component.scss']
 })
-export class EquipmentFacilitiesModalComponent implements OnInit {
-
+export class ResponsibleModalComponent implements OnInit {
   isAdd: boolean = false;
-  floors: FloorModel[] = [];
+  companies: CompanyModel[] = [];
 
-  equipmentFacilitiesForm = new FormGroup({
+  responsibleForm = new FormGroup({
     name: new FormControl('', [Validators.minLength(5)]),
-    id_floor: new FormControl('', [Validators.required]),
-    description: new FormControl('', [Validators.minLength(5)]),
+    id_company: new FormControl('', [Validators.required]),
+    document_id: new FormControl('', [Validators.minLength(5)]),
   })
 
   constructor(
     private dialog: MatDialog,
     private apiService: ApiService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<EquipmentFacilitiesModalComponent>,
+    private dialogRef: MatDialogRef<ResponsibleModalComponent>,
   ) { }
 
   ngOnInit(): void {
@@ -36,21 +35,21 @@ export class EquipmentFacilitiesModalComponent implements OnInit {
     } else {
       this.isAdd = true;
     }
-    this.getAllFloor();
+    this.getAllCompany();
   }
 
-  saveEquipmentFacilities(values: any){
+  saveResponsible(values: any){
     let dialogRef = globalLoading(this.dialog);
     let data: any = {
       name: values.name,
-      id_floor: values.id_floor,
-      description: values.description,
+      id_company: values.id_company,
+      document_id: values.document_id,
     }
     let route = '';
     if(this.isAdd){
-      route = 'createEquipmentFacilities';
+      route = 'createResponsible';
     } else {
-      route = 'updateEquipmentFacilities';
+      route = 'updateResponsible';
       data.id = this.data.id;
     }
     this.apiService.call(data, route, 'POST', true).subscribe({
@@ -92,23 +91,24 @@ export class EquipmentFacilitiesModalComponent implements OnInit {
     });
   }
 
-  getAllFloor(){
+  getAllCompany(){
     let dialogRef = globalLoading(this.dialog);
-    this.apiService.call(null, 'getAllFloor', 'GET', true).subscribe({
+    this.apiService.call(null, 'getAllCompany', 'GET', true).subscribe({
       next: (response) => {
         if(response.status === 'SUCCESS'){
-          this.floors = [];
-          response.data.map((floor: any) => {
-            this.floors.push({
-              id: floor.id,
-              floor: floor.floor,
+          this.companies = [];
+          response.data.map((company: any) => {
+            this.companies.push({
+              id: company.id,
+              company_name: company.company_name,
+              contact_phone: company.contact_phone
             })
           });
           if(!this.isAdd){
             console.log(this.data);
-            this.equipmentFacilitiesForm.controls.name.setValue(this.data.name);
-            this.equipmentFacilitiesForm.controls.id_floor.setValue(this.data.floor.id);
-            this.equipmentFacilitiesForm.controls.description.setValue(this.data.description);
+            this.responsibleForm.controls.name.setValue(this.data.name);
+            this.responsibleForm.controls.id_company.setValue(this.data.company.id);
+            this.responsibleForm.controls.document_id.setValue(this.data.document_id);
           }
           dialogRef.close();
         } else {
@@ -139,15 +139,16 @@ export class EquipmentFacilitiesModalComponent implements OnInit {
     })
   }
 
-  openAddFloor(){
-    let dialogRef = this.dialog.open(FloorModalComponent,{
+  openAddCompany(){
+    let dialogRef = this.dialog.open(CompanyModalComponent,{
       backdropClass: 'bdc',
       panelClass: 'modal-bg'
     });
     dialogRef.afterClosed().subscribe((response) => {
       if(response === 'success'){
-        this.getAllFloor();
+        this.getAllCompany();
       } 
     });
   }
+
 }

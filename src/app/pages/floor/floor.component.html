@@ -50,7 +50,8 @@
                 </div>
                 <mat-paginator class="main-paginator" [pageSizeOptions]="[5, 10, 20]"
                     showFirstLastButtons
-                    aria-label="Select page of periodic elements">
+                    aria-label="Select page of periodic elements"
+                    [ngClass]="{'paginator-border': floors.length === 0}">
                 </mat-paginator>
             </div>
         </mat-card-content>

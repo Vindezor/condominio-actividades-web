@@ -7,22 +7,55 @@
             <mat-expansion-panel>
               <mat-expansion-panel-header>
                 <mat-panel-title class="sidenav-title">
-                  <mat-icon>person</mat-icon>
+                  <mat-icon>settings</mat-icon>
                   <span>Configuraciones</span>
                 </mat-panel-title>
               </mat-expansion-panel-header>
-              <mat-divider></mat-divider>
+              
               <div (click)="goTo('equipment_facilities')" mat-raised-button class="button-sidenav">
                 <li>Equipamientos e Instalaciones</li>
               </div>
-              <mat-divider></mat-divider>
+              
               <div (click)="goTo('floor')" mat-raised-button class="button-sidenav">
                 <li>Pisos</li>
               </div>
-              <mat-divider></mat-divider>
+              
               <div (click)="goTo('company')" mat-raised-button class="button-sidenav">
                 <li>Compañias</li>
               </div>
+
+              <div (click)="goTo('responsible')" mat-raised-button class="button-sidenav">
+                <li>Responsables</li>
+              </div>
+
+              <div (click)="goTo('type_work')" mat-raised-button class="button-sidenav">
+                <li>Tipos de Trabajo</li>
+              </div>
+
+              <div (click)="goTo('state_work')" mat-raised-button class="button-sidenav">
+                <li>Estados de Trabajo</li>
+              </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title class="sidenav-title">
+                  <mat-icon>work</mat-icon>
+                  <span>Trabajos</span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              
+              <div (click)="goTo('work')" mat-raised-button class="button-sidenav">
+                <li>Todos los Trabajos</li>
+              </div>
+
+              <div (click)="goTo('home')" mat-raised-button class="button-sidenav">
+                <li>Trabajos completados</li>
+              </div>
+
+              <div (click)="goTo('home')" mat-raised-button class="button-sidenav">
+                <li>Trabajos Inconclusos</li>
+              </div>
+              
             </mat-expansion-panel>
           </mat-accordion>
     </mat-sidenav>

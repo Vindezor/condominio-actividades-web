@@ -2,28 +2,28 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { EquipmentFacilitiesModel } from 'src/app/core/models/equipment-facilities-model';
+import { ResponsibleModel } from 'src/app/core/models/responsible-model';
 import { ApiService } from 'src/app/core/services/api.service';
-import { globalAlert } from 'src/app/shared/global-alert/global-alert';
+import { ResponsibleModalComponent } from '../responsible-modal/responsible-modal.component';
 import { globalLoading } from 'src/app/shared/global-loading/global-loading.component';
-import { EquipmentFacilitiesModalComponent } from '../equipment-facilities-modal/equipment-facilities-modal.component';
+import { globalAlert } from 'src/app/shared/global-alert/global-alert';
 
 @Component({
-  selector: 'app-equipment-facilities',
-  templateUrl: './equipment-facilities.component.html',
-  styleUrls: ['./equipment-facilities.component.scss']
+  selector: 'app-responsible',
+  templateUrl: './responsible.component.html',
+  styleUrls: ['./responsible.component.scss']
 })
-export class EquipmentFacilitiesComponent implements OnInit {
-  equipmentFacilities: EquipmentFacilitiesModel[] = [];
-  displayedColumns: string[] = ['name', 'floor', 'description', 'action'];
-  dataSource = new MatTableDataSource<EquipmentFacilitiesModel>();
+export class ResponsibleComponent implements OnInit {
+  responsibles: ResponsibleModel[] = [];
+  displayedColumns: string[] = ['name', 'document_id', 'company_name', 'action'];
+  dataSource = new MatTableDataSource<ResponsibleModel>();
   
   @ViewChild(MatPaginator) paginator :any = MatPaginator;
 
   constructor(private dialog: MatDialog, private apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.getAllEquipmentFacilities();
+    this.getAllResponsible();
   }
 
 
@@ -31,41 +31,41 @@ export class EquipmentFacilitiesComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  openAddEquipmentFacilities(){
-    let dialogRef = this.dialog.open(EquipmentFacilitiesModalComponent,{
+  openAddResponsible(){
+    let dialogRef = this.dialog.open(ResponsibleModalComponent,{
       backdropClass: 'bdc',
       panelClass: 'modal-bg'
     });
     dialogRef.afterClosed().subscribe((response) => {
       if(response === 'success'){
-        this.getAllEquipmentFacilities();
+        this.getAllResponsible();
       } 
     });
   }
 
-  openEditEquipmentFacilities(data: any){
-    let dialogRef = this.dialog.open(EquipmentFacilitiesModalComponent,{
+  openEditResponsible(data: any){
+    let dialogRef = this.dialog.open(ResponsibleModalComponent,{
       data: data,
       backdropClass: 'bdc',
       panelClass: 'modal-bg'
     });
     dialogRef.afterClosed().subscribe((response) => {
       if(response === 'success'){
-        this.getAllEquipmentFacilities();
+        this.getAllResponsible();
       } 
     })
   }
 
-  getAllEquipmentFacilities(){
+  getAllResponsible(){
     let dialogRef = globalLoading(this.dialog);
-    this.apiService.call(null, 'getAllEquipmentFacilities', 'GET', true).subscribe({
+    this.apiService.call(null, 'getAllResponsible', 'GET', true).subscribe({
       next: (response) => {
         if(response.status === 'SUCCESS'){
-          this.equipmentFacilities = [];
-          response.data.map((equipmentFacility: EquipmentFacilitiesModel) => {
-            this.equipmentFacilities.push(equipmentFacility);
+          this.responsibles = [];
+          response.data.map((responsible: ResponsibleModel) => {
+            this.responsibles.push(responsible);
           });
-          this.dataSource.data = this.equipmentFacilities;
+          this.dataSource.data = this.responsibles;
           dialogRef.close();
         } else {
           dialogRef.close();
@@ -95,10 +95,10 @@ export class EquipmentFacilitiesComponent implements OnInit {
     });
   }
 
-  deleteEquipmentFacilities(values: any){
+  deleteResponsible(values: any){
     globalAlert({
       title: 'Importante',
-      text: '¿Esta seguro de que desea eliminar el Equipamiento e Instalación?',
+      text: '¿Esta seguro de que desea eliminar la Compañia?',
       icon: 'warning',
       cancelButton: true,
       cancelButtonText: 'Cancelar',
@@ -108,7 +108,7 @@ export class EquipmentFacilitiesComponent implements OnInit {
         let data: any = {
           id: values.id
         }
-        this.apiService.call(data, 'deleteEquipmentFacilities', 'POST', true).subscribe({
+        this.apiService.call(data, 'deleteResponsible', 'POST', true).subscribe({
           next: (response) => {
             if(response.status === 'SUCCESS'){
               dialogRef.close();
@@ -117,7 +117,7 @@ export class EquipmentFacilitiesComponent implements OnInit {
                 text: 'Se ha eliminado exitosamente',
                 icon: 'success',
               }).then(() => {
-                this.getAllEquipmentFacilities();
+                this.getAllResponsible();
               })
             } else {
               dialogRef.close();

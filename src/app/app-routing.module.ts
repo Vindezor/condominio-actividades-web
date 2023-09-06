@@ -7,6 +7,10 @@ import { MainNavComponent } from './shared/main-nav/main-nav.component';
 import { EquipmentFacilitiesComponent } from './pages/equipment-facilities/equipment-facilities.component';
 import { FloorComponent } from './pages/floor/floor.component';
 import { CompanyComponent } from './pages/company/company.component';
+import { ResponsibleComponent } from './pages/responsible/responsible.component';
+import { TypeWorkComponent } from './pages/type-work/type-work.component';
+import { StateWorkComponent } from './pages/state-work/state-work.component';
+import { WorkComponent } from './pages/work/work.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -16,6 +20,10 @@ const routes: Routes = [
     {path: 'equipment_facilities', component: EquipmentFacilitiesComponent},
     {path: 'floor', component: FloorComponent},
     {path: 'company', component: CompanyComponent},
+    {path: 'responsible', component: ResponsibleComponent},
+    {path: 'type_work', component: TypeWorkComponent},
+    {path: 'state_work', component: StateWorkComponent},
+    {path: 'work', component: WorkComponent},
     {path: '**', redirectTo: 'home'},
   ]},
   {path: '**', redirectTo: 'login'},

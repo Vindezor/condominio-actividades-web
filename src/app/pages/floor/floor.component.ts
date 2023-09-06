@@ -62,11 +62,8 @@ export class FloorComponent implements OnInit {
       next: (response) => {
         if(response.status === 'SUCCESS'){
           this.floors = [];
-          response.data.map((floor: any) => {
-            this.floors.push({
-              id: floor.id,
-              floor: floor.floor,
-            })
+          response.data.map((floor: FloorModel) => {
+            this.floors.push(floor);
           });
           this.dataSource.data = this.floors;
           dialogRef.close();

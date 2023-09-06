@@ -1,0 +1,117 @@
+<div mat-dialog-title class="dialog-title-center">
+    <h1>Trabajos</h1>
+</div>
+<mat-dialog-content class="padding-dialog-content">
+    <mat-card>
+        <form [formGroup]="workForm" novalidate>
+            <div class="input-with-action">
+                <mat-form-field class="auth-input" appearance="outline" floatLabel="always">
+                    <mat-label>Tipo de trabajo</mat-label>
+                    <mat-select formControlName="id_type_work" required placeholder="Seleccione un tipo de trabajo">
+                        <mat-option *ngFor="let type_work of type_works" [value]="type_work.id">
+                          {{type_work.type_work}}
+                        </mat-option>
+                      </mat-select>
+                    <!-- <mat-error *ngIf="workForm.controls['name'].hasError('minlength')">
+                        Campo debe tener <strong>mínimo 5 caracteres</strong>
+                    </mat-error> -->
+                    <!-- <div matSuffix>
+                        <button mat-raised-button color="primary">
+                            <mat-icon style="color: white;"> add </mat-icon>
+                        </button>
+                    </div> -->
+                </mat-form-field>
+                <div class="action-input">
+                    <button (click)="openAddTypeWork()" style="margin-left: 10px;" mat-mini-fab color="primary">
+                        <mat-icon style="color: white;"> add </mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="input-with-action">
+                <mat-form-field class="auth-input" appearance="outline" floatLabel="always">
+                    <mat-label>Responsable</mat-label>
+                    <mat-select formControlName="id_responsible" required placeholder="Seleccione un responsable">
+                        <mat-option *ngFor="let responsible of responsibles" [value]="responsible.id">
+                          {{responsible.name}}
+                        </mat-option>
+                      </mat-select>
+                    <!-- <mat-error *ngIf="workForm.controls['name'].hasError('minlength')">
+                        Campo debe tener <strong>mínimo 5 caracteres</strong>
+                    </mat-error> -->
+                    <!-- <div matSuffix>
+                        <button mat-raised-button color="primary">
+                            <mat-icon style="color: white;"> add </mat-icon>
+                        </button>
+                    </div> -->
+                </mat-form-field>
+                <div class="action-input">
+                    <button (click)="openAddResponsible()" style="margin-left: 10px;" mat-mini-fab color="primary">
+                        <mat-icon style="color: white;"> add </mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="input-with-action">
+                <mat-form-field class="auth-input" appearance="outline" floatLabel="always">
+                    <mat-label>Estado de trabajo</mat-label>
+                    <mat-select formControlName="id_state_work" required placeholder="Seleccione un estado de trabajo">
+                        <mat-option *ngFor="let state_work of state_works" [value]="state_work.id">
+                          {{state_work.state_work}}
+                        </mat-option>
+                      </mat-select>
+                    <!-- <mat-error *ngIf="workForm.controls['name'].hasError('minlength')">
+                        Campo debe tener <strong>mínimo 5 caracteres</strong>
+                    </mat-error> -->
+                    <!-- <div matSuffix>
+                        <button mat-raised-button color="primary">
+                            <mat-icon style="color: white;"> add </mat-icon>
+                        </button>
+                    </div> -->
+                </mat-form-field>
+                <div class="action-input">
+                    <button (click)="openAddStateWork()" style="margin-left: 10px;" mat-mini-fab color="primary">
+                        <mat-icon style="color: white;"> add </mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="input-double">
+                <mat-form-field class="auth-input" appearance="outline" floatLabel="always">
+                    <mat-label>Fecha de inicio</mat-label>
+                    <input class="form-control" matInput formControlName="start_date"
+                    maxlength="20" [matDatepicker]="picker_start_date" readonly placeholder="Seleccione una fecha">
+                    <mat-datepicker-toggle matSuffix [for]="picker_start_date">
+                        <mat-icon matDatepickerToggleIcon>calendar_month</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #picker_start_date></mat-datepicker>
+                    <mat-error *ngIf="workForm.controls['start_date'].hasError('minlength')">
+                        Campo debe tener <strong>mínimo 5 caracteres</strong>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="auth-input" appearance="outline" floatLabel="always">
+                    <mat-label>Fecha de culminación</mat-label>
+                    <input class="form-control" matInput formControlName="end_date"
+                    maxlength="20" [matDatepicker]="picker_end_date" readonly placeholder="Seleccione una fecha">
+                    <mat-datepicker-toggle matSuffix [for]="picker_end_date">
+                        <mat-icon matDatepickerToggleIcon>calendar_month</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #picker_end_date></mat-datepicker>
+                    <mat-error *ngIf="workForm.controls['end_date'].hasError('minlength')">
+                        Campo debe tener <strong>mínimo 5 caracteres</strong>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <mat-form-field class="auth-input" appearance="outline" floatLabel="always">
+                <mat-label>Descripción</mat-label>
+                <input class="form-control" matInput formControlName="description"
+                maxlength="20" placeholder="Ingrese una descripción del trabajo">
+                <mat-error *ngIf="workForm.controls['description'].hasError('minlength')">
+                    Campo debe tener <strong>mínimo 5 caracteres</strong>
+                </mat-error>
+            </mat-form-field>
+        </form>
+    </mat-card>
+</mat-dialog-content>
+<mat-dialog-actions class="buttons-center">
+    <button mat-raised-button mat-dialog-close color="warn">Cancelar</button>
+    <button mat-raised-button color="primary"
+    (click)="saveWork(workForm.value)">Guardar</button>
+</mat-dialog-actions>

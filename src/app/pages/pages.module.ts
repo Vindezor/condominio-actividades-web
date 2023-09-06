@@ -18,7 +18,16 @@ import { FloorModalComponent } from './floor-modal/floor-modal.component';
 import { FloorComponent } from './floor/floor.component';
 import { CompanyComponent } from './company/company.component';
 import { CompanyModalComponent } from './company-modal/company-modal.component';
-
+import { ResponsibleComponent } from './responsible/responsible.component';
+import { ResponsibleModalComponent } from './responsible-modal/responsible-modal.component';
+import { TypeWorkComponent } from './type-work/type-work.component';
+import { TypeWorkModalComponent } from './type-work-modal/type-work-modal.component';
+import { StateWorkComponent } from './state-work/state-work.component';
+import { StateWorkModalComponent } from './state-work-modal/state-work-modal.component';
+import { WorkComponent } from './work/work.component';
+import { WorkModalComponent } from './work-modal/work-modal.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({
   declarations: [
     HomeComponent,
@@ -27,7 +36,15 @@ import { CompanyModalComponent } from './company-modal/company-modal.component';
     FloorModalComponent,
     FloorComponent,
     CompanyComponent,
-    CompanyModalComponent
+    CompanyModalComponent,
+    ResponsibleComponent,
+    ResponsibleModalComponent,
+    TypeWorkComponent,
+    TypeWorkModalComponent,
+    StateWorkComponent,
+    StateWorkModalComponent,
+    WorkComponent,
+    WorkModalComponent
   ],
   imports: [
     CommonModule,
@@ -42,6 +59,8 @@ import { CompanyModalComponent } from './company-modal/company-modal.component';
     MatIconModule,
     MatDialogModule,
     MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
 export class PagesModule { }

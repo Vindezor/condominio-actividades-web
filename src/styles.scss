@@ -171,11 +171,15 @@ mat-toolbar{
 .main-table{
   width: 100%;
   height: 100%;
-  background-color: #f9f9f9;
+  background-color: #f3f3f3;
 }
 
 .main-paginator{
-  background-color: #f9f9f9;
+  background-color: #f3f3f3;
+}
+
+.paginator-border{
+  border-top: solid 1px #c5c5c5;
 }
 
 .main-search{
@@ -205,7 +209,7 @@ mat-toolbar{
 }
 
 .modal-bg >  mat-dialog-container{
-  background-color: #f5f5f5;
+  background-color: #f3f3f3;
 }
 
 .padding-dialog-content {
@@ -265,10 +269,12 @@ mat-toolbar{
   align-items: center;
   justify-content: left;
   padding: 0px 26px;
+  cursor: pointer;
 }
 
 .button-sidenav:hover{
-  background-color: #f5f5f5;
+  background-color: #f3f3f3;
+  border-radius: 20px;
 }
 
 .mat-expansion-panel-body{
@@ -281,4 +287,15 @@ mat-toolbar{
   color: rgb(39, 73, 139, 1);
   font-weight: bold;
   gap: 10px;
+}
+
+.mat-expansion-panel-spacing{
+  margin: 0px !important;
+}
+
+.input-double{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  column-gap: 20px;
 }

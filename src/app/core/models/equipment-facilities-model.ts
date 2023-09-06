@@ -1,7 +1,8 @@
+import { FloorModel } from "./floor-model";
+
 export interface EquipmentFacilitiesModel{
     id: number;
     name: string;
-    floor: string;
-    id_floor: number;
+    floor: FloorModel;
     description: string;
 }

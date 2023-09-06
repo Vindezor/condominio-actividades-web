@@ -2,28 +2,28 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { EquipmentFacilitiesModel } from 'src/app/core/models/equipment-facilities-model';
 import { ApiService } from 'src/app/core/services/api.service';
-import { globalAlert } from 'src/app/shared/global-alert/global-alert';
+import { TypeWorkModalComponent } from '../type-work-modal/type-work-modal.component';
 import { globalLoading } from 'src/app/shared/global-loading/global-loading.component';
-import { EquipmentFacilitiesModalComponent } from '../equipment-facilities-modal/equipment-facilities-modal.component';
+import { globalAlert } from 'src/app/shared/global-alert/global-alert';
+import { TypeWorkModel } from 'src/app/core/models/type-work-model';
 
 @Component({
-  selector: 'app-equipment-facilities',
-  templateUrl: './equipment-facilities.component.html',
-  styleUrls: ['./equipment-facilities.component.scss']
+  selector: 'app-type-work',
+  templateUrl: './type-work.component.html',
+  styleUrls: ['./type-work.component.scss']
 })
-export class EquipmentFacilitiesComponent implements OnInit {
-  equipmentFacilities: EquipmentFacilitiesModel[] = [];
-  displayedColumns: string[] = ['name', 'floor', 'description', 'action'];
-  dataSource = new MatTableDataSource<EquipmentFacilitiesModel>();
+export class TypeWorkComponent implements OnInit {
+  type_works: TypeWorkModel[] = [];
+  displayedColumns: string[] = ['type_work', 'action'];
+  dataSource = new MatTableDataSource<TypeWorkModel>();
   
   @ViewChild(MatPaginator) paginator :any = MatPaginator;
 
   constructor(private dialog: MatDialog, private apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.getAllEquipmentFacilities();
+    this.getAllTypeWork();
   }
 
 
@@ -31,41 +31,41 @@ export class EquipmentFacilitiesComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  openAddEquipmentFacilities(){
-    let dialogRef = this.dialog.open(EquipmentFacilitiesModalComponent,{
+  openAddTypeWork(){
+    let dialogRef = this.dialog.open(TypeWorkModalComponent,{
       backdropClass: 'bdc',
       panelClass: 'modal-bg'
     });
     dialogRef.afterClosed().subscribe((response) => {
       if(response === 'success'){
-        this.getAllEquipmentFacilities();
+        this.getAllTypeWork();
       } 
     });
   }
 
-  openEditEquipmentFacilities(data: any){
-    let dialogRef = this.dialog.open(EquipmentFacilitiesModalComponent,{
+  openEditTypeWork(data: any){
+    let dialogRef = this.dialog.open(TypeWorkModalComponent,{
       data: data,
       backdropClass: 'bdc',
       panelClass: 'modal-bg'
     });
     dialogRef.afterClosed().subscribe((response) => {
       if(response === 'success'){
-        this.getAllEquipmentFacilities();
+        this.getAllTypeWork();
       } 
     })
   }
 
-  getAllEquipmentFacilities(){
+  getAllTypeWork(){
     let dialogRef = globalLoading(this.dialog);
-    this.apiService.call(null, 'getAllEquipmentFacilities', 'GET', true).subscribe({
+    this.apiService.call(null, 'getAllTypeWork', 'GET', true).subscribe({
       next: (response) => {
         if(response.status === 'SUCCESS'){
-          this.equipmentFacilities = [];
-          response.data.map((equipmentFacility: EquipmentFacilitiesModel) => {
-            this.equipmentFacilities.push(equipmentFacility);
+          this.type_works = [];
+          response.data.map((type_work: TypeWorkModel) => {
+            this.type_works.push(type_work);
           });
-          this.dataSource.data = this.equipmentFacilities;
+          this.dataSource.data = this.type_works;
           dialogRef.close();
         } else {
           dialogRef.close();
@@ -95,10 +95,10 @@ export class EquipmentFacilitiesComponent implements OnInit {
     });
   }
 
-  deleteEquipmentFacilities(values: any){
+  deleteTypeWork(values: any){
     globalAlert({
       title: 'Importante',
-      text: '¿Esta seguro de que desea eliminar el Equipamiento e Instalación?',
+      text: '¿Esta seguro de que desea eliminar el Tipo de Trabajo?',
       icon: 'warning',
       cancelButton: true,
       cancelButtonText: 'Cancelar',
@@ -108,7 +108,7 @@ export class EquipmentFacilitiesComponent implements OnInit {
         let data: any = {
           id: values.id
         }
-        this.apiService.call(data, 'deleteEquipmentFacilities', 'POST', true).subscribe({
+        this.apiService.call(data, 'deleteTypeWork', 'POST', true).subscribe({
           next: (response) => {
             if(response.status === 'SUCCESS'){
               dialogRef.close();
@@ -117,7 +117,7 @@ export class EquipmentFacilitiesComponent implements OnInit {
                 text: 'Se ha eliminado exitosamente',
                 icon: 'success',
               }).then(() => {
-                this.getAllEquipmentFacilities();
+                this.getAllTypeWork();
               })
             } else {
               dialogRef.close();
