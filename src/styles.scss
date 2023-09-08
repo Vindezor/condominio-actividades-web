@@ -258,7 +258,7 @@ mat-toolbar{
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-bottom: 20px;
+  padding-bottom: 1.34375em;
 }
 
 .button-sidenav{
@@ -295,7 +295,21 @@ mat-toolbar{
 
 .input-double{
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 48% 48%;
   width: 100%;
-  column-gap: 20px;
+  column-gap: 4%;
+}
+
+@media (max-width: 600px) {
+  .input-double{
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 1fr 1fr;
+    width: 100%;
+  }
+}
+
+.textarea-input{
+  min-height: 80px;
+  max-height: 130px;
 }

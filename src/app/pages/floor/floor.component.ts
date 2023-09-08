@@ -34,7 +34,9 @@ export class FloorComponent implements OnInit {
   openAddFloor(){
     let dialogRef = this.dialog.open(FloorModalComponent,{
       backdropClass: 'bdc',
-      panelClass: 'modal-bg'
+      panelClass: 'modal-bg',
+      disableClose: true,
+      autoFocus: false,
     });
     dialogRef.afterClosed().subscribe((response) => {
       if(response === 'success'){
@@ -47,7 +49,9 @@ export class FloorComponent implements OnInit {
     let dialogRef = this.dialog.open(FloorModalComponent,{
       data: data,
       backdropClass: 'bdc',
-      panelClass: 'modal-bg'
+      panelClass: 'modal-bg',
+      disableClose: true,
+      autoFocus: false,
     });
     dialogRef.afterClosed().subscribe((response) => {
       if(response === 'success'){

@@ -34,7 +34,9 @@ export class EquipmentFacilitiesComponent implements OnInit {
   openAddEquipmentFacilities(){
     let dialogRef = this.dialog.open(EquipmentFacilitiesModalComponent,{
       backdropClass: 'bdc',
-      panelClass: 'modal-bg'
+      panelClass: 'modal-bg',
+      disableClose: true,
+      autoFocus: false,
     });
     dialogRef.afterClosed().subscribe((response) => {
       if(response === 'success'){
@@ -47,7 +49,9 @@ export class EquipmentFacilitiesComponent implements OnInit {
     let dialogRef = this.dialog.open(EquipmentFacilitiesModalComponent,{
       data: data,
       backdropClass: 'bdc',
-      panelClass: 'modal-bg'
+      panelClass: 'modal-bg',
+      disableClose: true,
+      autoFocus: false,
     });
     dialogRef.afterClosed().subscribe((response) => {
       if(response === 'success'){

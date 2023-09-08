@@ -79,7 +79,10 @@ export class ResponsibleModalComponent implements OnInit {
             title: 'Error',
             text: 'Disculpe, su sesión ha expirado.',
             icon: 'error',
-          }).then(() => this.apiService.logout());
+          }).then(() => {
+            this.dialogRef.close('logout');
+            this.apiService.logout();
+          });
         } else {
           globalAlert({
             title: 'Error',
@@ -127,7 +130,10 @@ export class ResponsibleModalComponent implements OnInit {
             title: 'Error',
             text: 'Disculpe, su sesión ha expirado.',
             icon: 'error',
-          }).then(() => this.apiService.logout());
+          }).then(() => {
+            this.dialogRef.close('logout');
+            this.apiService.logout();
+          });
         } else {
           globalAlert({
             title: 'Error',
@@ -142,11 +148,15 @@ export class ResponsibleModalComponent implements OnInit {
   openAddCompany(){
     let dialogRef = this.dialog.open(CompanyModalComponent,{
       backdropClass: 'bdc',
-      panelClass: 'modal-bg'
+      panelClass: 'modal-bg',
+      disableClose: true,
+      autoFocus: false,
     });
     dialogRef.afterClosed().subscribe((response) => {
       if(response === 'success'){
         this.getAllCompany();
+      } else if(response === 'logout'){
+        this.dialogRef.close();
       } 
     });
   }

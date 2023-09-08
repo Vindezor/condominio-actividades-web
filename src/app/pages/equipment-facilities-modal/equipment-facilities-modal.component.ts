@@ -80,7 +80,10 @@ export class EquipmentFacilitiesModalComponent implements OnInit {
             title: 'Error',
             text: 'Disculpe, su sesión ha expirado.',
             icon: 'error',
-          }).then(() => this.apiService.logout());
+          }).then(() => {
+            this.dialogRef.close('logout');
+            this.apiService.logout();
+          });
         } else {
           globalAlert({
             title: 'Error',
@@ -127,7 +130,10 @@ export class EquipmentFacilitiesModalComponent implements OnInit {
             title: 'Error',
             text: 'Disculpe, su sesión ha expirado.',
             icon: 'error',
-          }).then(() => this.apiService.logout());
+          }).then(() => {
+            this.dialogRef.close('logout');
+            this.apiService.logout();
+          });
         } else {
           globalAlert({
             title: 'Error',
@@ -142,11 +148,15 @@ export class EquipmentFacilitiesModalComponent implements OnInit {
   openAddFloor(){
     let dialogRef = this.dialog.open(FloorModalComponent,{
       backdropClass: 'bdc',
-      panelClass: 'modal-bg'
+      panelClass: 'modal-bg',
+      disableClose: true,
+      autoFocus: false,
     });
     dialogRef.afterClosed().subscribe((response) => {
       if(response === 'success'){
         this.getAllFloor();
+      } else if(response === 'logout'){
+        this.dialogRef.close();
       } 
     });
   }

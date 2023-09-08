@@ -72,7 +72,10 @@ export class TypeWorkModalComponent implements OnInit {
             title: 'Error',
             text: 'Disculpe, su sesión ha expirado.',
             icon: 'error',
-          }).then(() => this.apiService.logout());
+          }).then(() => {
+            this.dialogRef.close('logout');
+            this.apiService.logout();
+          });
         } else {
           globalAlert({
             title: 'Error',

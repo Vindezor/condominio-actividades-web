@@ -2,28 +2,28 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { ResponsibleModel } from 'src/app/core/models/responsible-model';
+import { WorkModel } from 'src/app/core/models/work-model';
 import { ApiService } from 'src/app/core/services/api.service';
-import { ResponsibleModalComponent } from '../responsible-modal/responsible-modal.component';
 import { globalLoading } from 'src/app/shared/global-loading/global-loading.component';
+import { WorkModalComponent } from '../work-modal/work-modal.component';
 import { globalAlert } from 'src/app/shared/global-alert/global-alert';
 
 @Component({
-  selector: 'app-responsible',
-  templateUrl: './responsible.component.html',
-  styleUrls: ['./responsible.component.scss']
+  selector: 'app-work-undone',
+  templateUrl: './work-undone.component.html',
+  styleUrls: ['./work-undone.component.scss']
 })
-export class ResponsibleComponent implements OnInit {
-  responsibles: ResponsibleModel[] = [];
-  displayedColumns: string[] = ['name', 'document_id', 'company_name', 'action'];
-  dataSource = new MatTableDataSource<ResponsibleModel>();
+export class WorkUndoneComponent implements OnInit {
+  works: WorkModel[] = [];
+  displayedColumns: string[] = ['type_work', 'state_work', 'equipment_facilities', 'description', 'action'];
+  dataSource = new MatTableDataSource<WorkModel>();
   
   @ViewChild(MatPaginator) paginator :any = MatPaginator;
 
   constructor(private dialog: MatDialog, private apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.getAllResponsible();
+    this.getAllWork();
   }
 
 
@@ -31,22 +31,8 @@ export class ResponsibleComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  openAddResponsible(){
-    let dialogRef = this.dialog.open(ResponsibleModalComponent,{
-      backdropClass: 'bdc',
-      panelClass: 'modal-bg',
-      disableClose: true,
-      autoFocus: false,
-    });
-    dialogRef.afterClosed().subscribe((response) => {
-      if(response === 'success'){
-        this.getAllResponsible();
-      } 
-    });
-  }
-
-  openEditResponsible(data: any){
-    let dialogRef = this.dialog.open(ResponsibleModalComponent,{
+  openEditWork(data: any){
+    let dialogRef = this.dialog.open(WorkModalComponent,{
       data: data,
       backdropClass: 'bdc',
       panelClass: 'modal-bg',
@@ -55,21 +41,23 @@ export class ResponsibleComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((response) => {
       if(response === 'success'){
-        this.getAllResponsible();
+        this.getAllWork();
       } 
     })
   }
 
-  getAllResponsible(){
+  getAllWork(){
     let dialogRef = globalLoading(this.dialog);
-    this.apiService.call(null, 'getAllResponsible', 'GET', true).subscribe({
+    this.apiService.call(null, 'getAllWork', 'GET', true).subscribe({
       next: (response) => {
         if(response.status === 'SUCCESS'){
-          this.responsibles = [];
-          response.data.map((responsible: ResponsibleModel) => {
-            this.responsibles.push(responsible);
+          this.works = [];
+          response.data.map((work: WorkModel) => {
+            if(work.state_work.id === 2){
+              this.works.push(work)
+            }
           });
-          this.dataSource.data = this.responsibles;
+          this.dataSource.data = this.works;
           dialogRef.close();
         } else {
           dialogRef.close();
@@ -99,10 +87,10 @@ export class ResponsibleComponent implements OnInit {
     });
   }
 
-  deleteResponsible(values: any){
+  deleteWork(values: any){
     globalAlert({
       title: 'Importante',
-      text: '¿Esta seguro de que desea eliminar la Compañia?',
+      text: '¿Esta seguro de que desea eliminar el Trabajo?',
       icon: 'warning',
       cancelButton: true,
       cancelButtonText: 'Cancelar',
@@ -112,7 +100,7 @@ export class ResponsibleComponent implements OnInit {
         let data: any = {
           id: values.id
         }
-        this.apiService.call(data, 'deleteResponsible', 'POST', true).subscribe({
+        this.apiService.call(data, 'deleteWork', 'POST', true).subscribe({
           next: (response) => {
             if(response.status === 'SUCCESS'){
               dialogRef.close();
@@ -121,7 +109,7 @@ export class ResponsibleComponent implements OnInit {
                 text: 'Se ha eliminado exitosamente',
                 icon: 'success',
               }).then(() => {
-                this.getAllResponsible();
+                this.getAllWork();
               })
             } else {
               dialogRef.close();

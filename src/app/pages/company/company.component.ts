@@ -34,7 +34,9 @@ export class CompanyComponent implements OnInit {
   openAddCompany(){
     let dialogRef = this.dialog.open(CompanyModalComponent,{
       backdropClass: 'bdc',
-      panelClass: 'modal-bg'
+      panelClass: 'modal-bg',
+      disableClose: true,
+      autoFocus: false,
     });
     dialogRef.afterClosed().subscribe((response) => {
       if(response === 'success'){
@@ -47,7 +49,9 @@ export class CompanyComponent implements OnInit {
     let dialogRef = this.dialog.open(CompanyModalComponent,{
       data: data,
       backdropClass: 'bdc',
-      panelClass: 'modal-bg'
+      panelClass: 'modal-bg',
+      disableClose: true,
+      autoFocus: false,
     });
     dialogRef.afterClosed().subscribe((response) => {
       if(response === 'success'){

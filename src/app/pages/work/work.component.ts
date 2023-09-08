@@ -15,7 +15,7 @@ import { globalAlert } from 'src/app/shared/global-alert/global-alert';
 })
 export class WorkComponent implements OnInit {
   works: WorkModel[] = [];
-  displayedColumns: string[] = ['type_work', 'state_work', 'description', 'action'];
+  displayedColumns: string[] = ['type_work', 'state_work', 'equipment_facilities', 'description', 'action'];
   dataSource = new MatTableDataSource<WorkModel>();
   
   @ViewChild(MatPaginator) paginator :any = MatPaginator;
@@ -34,7 +34,9 @@ export class WorkComponent implements OnInit {
   openAddWork(){
     let dialogRef = this.dialog.open(WorkModalComponent,{
       backdropClass: 'bdc',
-      panelClass: 'modal-bg'
+      panelClass: 'modal-bg',
+      disableClose: true,
+      autoFocus: false,
     });
     dialogRef.afterClosed().subscribe((response) => {
       if(response === 'success'){
@@ -47,7 +49,9 @@ export class WorkComponent implements OnInit {
     let dialogRef = this.dialog.open(WorkModalComponent,{
       data: data,
       backdropClass: 'bdc',
-      panelClass: 'modal-bg'
+      panelClass: 'modal-bg',
+      disableClose: true,
+      autoFocus: false,
     });
     dialogRef.afterClosed().subscribe((response) => {
       if(response === 'success'){

@@ -27,7 +27,21 @@ import { StateWorkModalComponent } from './state-work-modal/state-work-modal.com
 import { WorkComponent } from './work/work.component';
 import { WorkModalComponent } from './work-modal/work-modal.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MAT_NATIVE_DATE_FORMATS, MatDateFormats, MatNativeDateModule, NativeDateModule } from '@angular/material/core';
+import { WorkDoneComponent } from './work-done/work-done.component';
+import { WorkUndoneComponent } from './work-undone/work-undone.component';7
+
+export const MY_FORMATS: MatDateFormats = {
+  parse: {
+      dateInput: 'DD-MM-YYYY',
+  },
+  display: {
+      dateInput: 'DD-MM-YYYY',
+      monthYearLabel: 'MMM YYYY',
+      dateA11yLabel: 'LL',
+      monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 @NgModule({
   declarations: [
     HomeComponent,
@@ -44,7 +58,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     StateWorkComponent,
     StateWorkModalComponent,
     WorkComponent,
-    WorkModalComponent
+    WorkModalComponent,
+    WorkDoneComponent,
+    WorkUndoneComponent
   ],
   imports: [
     CommonModule,
@@ -60,7 +76,15 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatDialogModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+  ],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'es-VE'},
+    { provide: MAT_DATE_FORMATS, useValue: {
+        display: {
+          dateInput: 'DD/MM/YYYY'
+        }
+    } }
   ]
 })
 export class PagesModule { }

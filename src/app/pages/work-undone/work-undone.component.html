@@ -1,7 +1,7 @@
 <div class="main-page">
     <mat-card class="main-card">
         <mat-card-header class="main-card-header">
-            <h1 class="h1-not-margin">Todos los Trabajos</h1>
+            <h1 class="h1-not-margin">Trabajos Inconclusos</h1>
         </mat-card-header>
         <mat-divider></mat-divider>
         <mat-form-field class="main-search" appearance="fill">
@@ -12,9 +12,6 @@
                 Campo debe tener <strong>mínimo 5 caracteres</strong>
             </mat-error> -->
         </mat-form-field>
-        <button (click)="openAddWork()" mat-raised-button color="primary">
-            <mat-icon matSuffix style="color: white;"> add </mat-icon>
-        </button>
         <button (click)="getAllWork()" style="margin-left: 10px;" mat-raised-button color="primary">
           <mat-icon matSuffix style="color: white;"> refresh </mat-icon>
       </button>

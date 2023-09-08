@@ -34,7 +34,9 @@ export class TypeWorkComponent implements OnInit {
   openAddTypeWork(){
     let dialogRef = this.dialog.open(TypeWorkModalComponent,{
       backdropClass: 'bdc',
-      panelClass: 'modal-bg'
+      panelClass: 'modal-bg',
+      disableClose: true,
+      autoFocus: false,
     });
     dialogRef.afterClosed().subscribe((response) => {
       if(response === 'success'){
@@ -47,7 +49,9 @@ export class TypeWorkComponent implements OnInit {
     let dialogRef = this.dialog.open(TypeWorkModalComponent,{
       data: data,
       backdropClass: 'bdc',
-      panelClass: 'modal-bg'
+      panelClass: 'modal-bg',
+      disableClose: true,
+      autoFocus: false,
     });
     dialogRef.afterClosed().subscribe((response) => {
       if(response === 'success'){

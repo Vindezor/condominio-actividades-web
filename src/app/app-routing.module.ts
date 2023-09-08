@@ -11,6 +11,8 @@ import { ResponsibleComponent } from './pages/responsible/responsible.component'
 import { TypeWorkComponent } from './pages/type-work/type-work.component';
 import { StateWorkComponent } from './pages/state-work/state-work.component';
 import { WorkComponent } from './pages/work/work.component';
+import { WorkDoneComponent } from './pages/work-done/work-done.component';
+import { WorkUndoneComponent } from './pages/work-undone/work-undone.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -24,6 +26,8 @@ const routes: Routes = [
     {path: 'type_work', component: TypeWorkComponent},
     {path: 'state_work', component: StateWorkComponent},
     {path: 'work', component: WorkComponent},
+    {path: 'work_done', component: WorkDoneComponent},
+    {path: 'work_undone', component: WorkUndoneComponent},
     {path: '**', redirectTo: 'home'},
   ]},
   {path: '**', redirectTo: 'login'},

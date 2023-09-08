@@ -11,6 +11,8 @@ import { globalLoading } from 'src/app/shared/global-loading/global-loading.comp
 import { TypeWorkModalComponent } from '../type-work-modal/type-work-modal.component';
 import { StateWorkModalComponent } from '../state-work-modal/state-work-modal.component';
 import { ResponsibleModalComponent } from '../responsible-modal/responsible-modal.component';
+import { EquipmentFacilitiesModel } from 'src/app/core/models/equipment-facilities-model';
+import { EquipmentFacilitiesModalComponent } from '../equipment-facilities-modal/equipment-facilities-modal.component';
 
 @Component({
   selector: 'app-work-modal',
@@ -18,18 +20,21 @@ import { ResponsibleModalComponent } from '../responsible-modal/responsible-moda
   styleUrls: ['./work-modal.component.scss']
 })
 export class WorkModalComponent implements OnInit {
+  firstTime: boolean = true;
   isAdd: boolean = false;
   type_works: TypeWorkModel[] = [];
   state_works: StateWorkModel[] = [];
   responsibles: ResponsibleModel[] = [];
+  equipment_facilities: EquipmentFacilitiesModel[] = [];
 
   workForm = new FormGroup({
     id_type_work: new FormControl('', [Validators.required]),
     id_state_work: new FormControl('', [Validators.required]),
+    id_equipment_facilities: new FormControl('', [Validators.required]),
     id_responsible: new FormControl('', [Validators.required]),
-    start_date: new FormControl('', [Validators.minLength(5)]),
-    end_date: new FormControl('', [Validators.minLength(5)]),
-    description: new FormControl('', [Validators.minLength(5)]),
+    start_date: new FormControl('', [Validators.required]),
+    end_date: new FormControl('', [Validators.required]),
+    description: new FormControl('', [Validators.required, Validators.minLength(5)]),
   })
 
   constructor(
@@ -95,7 +100,10 @@ export class WorkModalComponent implements OnInit {
             title: 'Error',
             text: 'Disculpe, su sesión ha expirado.',
             icon: 'error',
-          }).then(() => this.apiService.logout());
+          }).then(() => {
+            this.dialogRef.close();
+            this.apiService.logout();
+          });
         } else {
           globalAlert({
             title: 'Error',
@@ -116,10 +124,12 @@ export class WorkModalComponent implements OnInit {
           response.data.map((type_work: TypeWorkModel) => {
             this.type_works.push(type_work);
           });
-          if(!this.isAdd){
-            this.workForm.controls.id_type_work.setValue(this.data.type_work.id);
+          if(this.firstTime){
+            if(!this.isAdd){
+              this.workForm.controls.id_type_work.setValue(this.data.type_work.id);
+            }
+            this.getAllStateWork();
           }
-          this.getAllStateWork();
           dialogRef.close();
         } else {
           dialogRef.close();
@@ -137,7 +147,10 @@ export class WorkModalComponent implements OnInit {
             title: 'Error',
             text: 'Disculpe, su sesión ha expirado.',
             icon: 'error',
-          }).then(() => this.apiService.logout());
+          }).then(() => {
+            this.dialogRef.close();
+            this.apiService.logout();
+          });
         } else {
           globalAlert({
             title: 'Error',
@@ -158,10 +171,12 @@ export class WorkModalComponent implements OnInit {
           response.data.map((state_work: StateWorkModel) => {
             this.state_works.push(state_work);
           });
-          if(!this.isAdd){
-            this.workForm.controls.id_state_work.setValue(this.data.state_work.id);
+          if(this.firstTime){
+            if(!this.isAdd){
+              this.workForm.controls.id_state_work.setValue(this.data.state_work.id);
+            }
+            this.getAllEquipmentFacilities();
           }
-          this.getAllResponsible();
           dialogRef.close();
         } else {
           dialogRef.close();
@@ -179,7 +194,57 @@ export class WorkModalComponent implements OnInit {
             title: 'Error',
             text: 'Disculpe, su sesión ha expirado.',
             icon: 'error',
-          }).then(() => this.apiService.logout());
+          }).then(() => {
+            this.dialogRef.close();
+            this.apiService.logout();
+          });
+        } else {
+          globalAlert({
+            title: 'Error',
+            text: 'Disculpe, la plataforma no se encuentra disponible',
+            icon: 'error',
+          });
+        }
+      }
+    })
+  }
+
+  getAllEquipmentFacilities(){
+    let dialogRef = globalLoading(this.dialog);
+    this.apiService.call(null, 'getAllEquipmentFacilities', 'GET', true).subscribe({
+      next: (response) => {
+        if(response.status === 'SUCCESS'){
+          this.equipment_facilities = [];
+          response.data.map((equipment_facility: EquipmentFacilitiesModel) => {
+            this.equipment_facilities.push(equipment_facility);
+          });
+          if(this.firstTime){
+            if(!this.isAdd){
+              this.workForm.controls.id_equipment_facilities.setValue(this.data.equipment_facility.id);
+            }
+            this.getAllResponsible();
+          }
+          dialogRef.close();
+        } else {
+          dialogRef.close();
+          globalAlert({
+            title: 'Error',
+            text: 'Disculpe, ha ocurrido un error con el servicio',
+            icon: 'error',
+          })
+        }
+      },
+      error: (error) => {
+        dialogRef.close();
+        if(error.error.msg === 'Full authentication is required'){
+          globalAlert({
+            title: 'Error',
+            text: 'Disculpe, su sesión ha expirado.',
+            icon: 'error',
+          }).then(() => {
+            this.dialogRef.close();
+            this.apiService.logout();
+          });
         } else {
           globalAlert({
             title: 'Error',
@@ -200,8 +265,9 @@ export class WorkModalComponent implements OnInit {
           response.data.map((responsible: ResponsibleModel) => {
             this.responsibles.push(responsible);
           });
-          if(!this.isAdd){
+          if(!this.isAdd && this.firstTime){
             this.workForm.controls.id_responsible.setValue(this.data.responsible.id);
+            this.firstTime = false;
           }
           dialogRef.close();
         } else {
@@ -220,7 +286,10 @@ export class WorkModalComponent implements OnInit {
             title: 'Error',
             text: 'Disculpe, su sesión ha expirado.',
             icon: 'error',
-          }).then(() => this.apiService.logout());
+          }).then(() => {
+            this.dialogRef.close();
+            this.apiService.logout();
+          });
         } else {
           globalAlert({
             title: 'Error',
@@ -235,35 +304,63 @@ export class WorkModalComponent implements OnInit {
   openAddTypeWork(){
     let dialogRef = this.dialog.open(TypeWorkModalComponent,{
       backdropClass: 'bdc',
-      panelClass: 'modal-bg'
+      panelClass: 'modal-bg',
+      disableClose: true,
+      autoFocus: false,
     });
     dialogRef.afterClosed().subscribe((response) => {
       if(response === 'success'){
         this.getAllTypeWork();
-      } 
+      } else if(response === 'logout'){
+        this.dialogRef.close();
+      }
     });
   }
 
   openAddStateWork(){
     let dialogRef = this.dialog.open(StateWorkModalComponent,{
       backdropClass: 'bdc',
-      panelClass: 'modal-bg'
+      panelClass: 'modal-bg',
+      disableClose: true,
+      autoFocus: false,
     });
     dialogRef.afterClosed().subscribe((response) => {
       if(response === 'success'){
         this.getAllStateWork();
-      } 
+      } else if(response === 'logout'){
+        this.dialogRef.close();
+      }
     });
   }
 
   openAddResponsible(){
-    let dialogRef = this.dialog.open(ResponsibleModalComponent,{
+    let dialogRef = this.dialog.open(EquipmentFacilitiesModalComponent,{
       backdropClass: 'bdc',
-      panelClass: 'modal-bg'
+      panelClass: 'modal-bg',
+      disableClose: true,
+      autoFocus: false,
     });
     dialogRef.afterClosed().subscribe((response) => {
       if(response === 'success'){
         this.getAllResponsible();
+      } else if(response === 'logout'){
+        this.dialogRef.close();
+      } 
+    });
+  }
+
+  openAddEquipmentFacilities(){
+    let dialogRef = this.dialog.open(EquipmentFacilitiesModalComponent,{
+      backdropClass: 'bdc',
+      panelClass: 'modal-bg',
+      disableClose: true,
+      autoFocus: false,
+    });
+    dialogRef.afterClosed().subscribe((response) => {
+      if(response === 'success'){
+        this.getAllEquipmentFacilities();
+      } else if(response === 'logout'){
+        this.dialogRef.close();
       } 
     });
   }
