@@ -64,7 +64,7 @@ export class ApiService {
       this.setModelSesionInSession(this.modelSession);
       this.router.navigate(['login']);
       dialogRef.close();
-    }, 500);
+    }, 5000);
   }
 
   setModelSesionInSession(modelSession: Session) {

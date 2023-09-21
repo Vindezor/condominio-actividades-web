@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { WorkModel } from 'src/app/core/models/work-model';
 import { ApiService } from 'src/app/core/services/api.service';
@@ -18,7 +18,7 @@ export class WorkComponent implements OnInit {
   displayedColumns: string[] = ['type_work', 'state_work', 'equipment_facilities', 'description', 'action'];
   dataSource = new MatTableDataSource<WorkModel>();
   
-  @ViewChild(MatPaginator) paginator :any = MatPaginator;
+  @ViewChild(MatPaginator) paginator : any = MatPaginator;
 
   constructor(private dialog: MatDialog, private apiService: ApiService) { }
 

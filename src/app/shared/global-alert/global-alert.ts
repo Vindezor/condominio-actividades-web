@@ -23,7 +23,7 @@ export function globalAlert(options: AlertOptions) {
         confirmButtonText: options.confirmButtonText == null ? 'Aceptar' : options.confirmButtonText,
         showCancelButton: options.cancelButton,
         cancelButtonText: options.cancelButtonText,
-        cancelButtonColor: 'rgb(186, 74, 0)',
+        cancelButtonColor: '#f44336',
         heightAuto: false,
         allowOutsideClick: false,
         allowEscapeKey: false,

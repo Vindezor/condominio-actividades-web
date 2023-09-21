@@ -5,7 +5,7 @@ import { EquipmentFacilitiesComponent } from './equipment-facilities/equipment-f
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -29,7 +29,9 @@ import { WorkModalComponent } from './work-modal/work-modal.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MAT_NATIVE_DATE_FORMATS, MatDateFormats, MatNativeDateModule, NativeDateModule } from '@angular/material/core';
 import { WorkDoneComponent } from './work-done/work-done.component';
-import { WorkUndoneComponent } from './work-undone/work-undone.component';7
+import { CustomPaginatorIntl } from '../core/services/custom-paginator.service';
+import { WorkUndoneComponent } from './work-undone/work-undone.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 export const MY_FORMATS: MatDateFormats = {
   parse: {
@@ -77,6 +79,7 @@ export const MY_FORMATS: MatDateFormats = {
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatTooltipModule,
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'es-VE'},
@@ -84,7 +87,12 @@ export const MY_FORMATS: MatDateFormats = {
         display: {
           dateInput: 'DD/MM/YYYY'
         }
-    } }
+      }
+    },
+    {
+      provide: MatPaginatorIntl,
+      useClass: CustomPaginatorIntl,
+    }
   ]
 })
 export class PagesModule { }

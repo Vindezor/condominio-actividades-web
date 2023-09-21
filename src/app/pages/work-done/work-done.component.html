@@ -44,8 +44,8 @@
                           <th mat-header-cell *matHeaderCellDef> Acción </th>
                           <td mat-cell *matCellDef="let element">
                             <div class="action-table-two">
-                              <mat-icon (click)="openEditWork(element)" class="icon-action"> edit </mat-icon>
-                              <mat-icon (click)="deleteWork(element)" class="icon-action"> delete </mat-icon>
+                              <mat-icon matTooltip="Editar" (click)="openEditWork(element)" class="icon-action"> edit </mat-icon>
+                              <mat-icon matTooltip="Eliminar" (click)="deleteWork(element)" class="icon-action"> delete </mat-icon>
                             </div>
                           </td>
                         </ng-container>

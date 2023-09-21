@@ -13,11 +13,13 @@ import { StateWorkComponent } from './pages/state-work/state-work.component';
 import { WorkComponent } from './pages/work/work.component';
 import { WorkDoneComponent } from './pages/work-done/work-done.component';
 import { WorkUndoneComponent } from './pages/work-undone/work-undone.component';
+import { NoConnectedGuard } from './core/guards/no-connected.guard';
+import { ConnectedGuard } from './core/guards/connected.guard';
 
 const routes: Routes = [
-  {path: 'login', component: LoginComponent},
-  {path: 'register', component: RegisterComponent},
-  {path: '', component: MainNavComponent, children: [
+  {path: 'login', component: LoginComponent, canActivate: [NoConnectedGuard]},
+  {path: 'register', component: RegisterComponent, canActivate: [NoConnectedGuard]},
+  {path: '', canActivate: [ConnectedGuard], component: MainNavComponent, children: [
     {path: 'home', component: HomeComponent},
     {path: 'equipment_facilities', component: EquipmentFacilitiesComponent},
     {path: 'floor', component: FloorComponent},

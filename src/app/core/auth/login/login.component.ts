@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
           this.apiService.setToken(response.data.token);
           this.apiService.setModelSesionInSession(this.apiService.modelSession);
           dialogRef.close();
-          this.router.navigate(['home']);
+          this.router.navigate(['work']);
         } else if (response.msg == 'Usuario y/o Contraseña inválida') {
           dialogRef.close();
           globalAlert({

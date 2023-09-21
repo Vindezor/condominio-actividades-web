@@ -20,6 +20,7 @@ export function globalLoading(dialog: MatDialog){
     GlobalLoadingComponent,
     {
       panelClass: 'custom-dialog',
+      backdropClass: 'bdc',
       disableClose: true,
     }
   );

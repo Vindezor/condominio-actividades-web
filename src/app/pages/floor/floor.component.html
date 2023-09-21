@@ -12,10 +12,10 @@
                 Campo debe tener <strong>mínimo 5 caracteres</strong>
             </mat-error> -->
         </mat-form-field>
-        <button (click)="openAddFloor()" mat-raised-button color="primary">
+        <button matTooltip="Añadir piso" (click)="openAddFloor()" mat-raised-button color="primary">
             <mat-icon matSuffix style="color: white;"> add </mat-icon>
         </button>
-        <button (click)="getAllFloor()" style="margin-left: 10px;" mat-raised-button color="primary">
+        <button matTooltip="Refrescar" (click)="getAllFloor()" style="margin-left: 10px;" mat-raised-button color="primary">
           <mat-icon matSuffix style="color: white;"> refresh </mat-icon>
       </button>
         <mat-card-content>
@@ -32,8 +32,8 @@
                           <th mat-header-cell *matHeaderCellDef> Acción </th>
                           <td mat-cell *matCellDef="let element">
                             <div class="action-table-two">
-                              <mat-icon (click)="openEditFloor(element)" class="icon-action"> edit </mat-icon>
-                              <mat-icon (click)="deleteFloor(element)" class="icon-action"> delete </mat-icon>
+                              <mat-icon matTooltip="Editar" (click)="openEditFloor(element)" class="icon-action"> edit </mat-icon>
+                              <mat-icon matTooltip="Eliminar" (click)="deleteFloor(element)" class="icon-action"> delete </mat-icon>
                             </div>
                             <!-- <button (click)="openEditEquipmentFacilities(element)" mat-raised-button color="primary">Editar</button> -->
                           </td>
